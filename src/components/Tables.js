@@ -1,54 +1,52 @@
-import React, { Component, useState } from "react";
+import React, { Component, useState, useEffect } from "react";
+/* Declare new Header variable for generating new Headers from 
+the data
+*/
+let newHeader = [];
 
-const intialHeader = [
-  {
-    value: "first_name",
-    label: "First Name"
-  },
-  {
-    value: "last_name",
-    label: "Last Name"
-  },
-  {
-    value: "company_name",
-    label: "Company Name"
-  },
-  {
-    value: "state",
-    label: "State"
-  },
-  {
-    value: "zip",
-    label: "Zip"
-  },
-  {
-    value: "email",
-    label: "Email"
-  },
-  {
-    value: "web",
-    label: "Web"
-  },
-  {
-    value: "age",
-    label: "Age"
+/* Generate function 
+@Params  -> data[]
+return -> [new Set with headers]
+*/
+
+function generateHeader(users) {
+  if (users && users.length > 1) {
+    let headerValues = Object.keys(users[0]);
+    let headerLabels = headerValues.map(i => {
+      i = i.charAt(0).toUpperCase() + i.slice(1);
+      return i.replace("_", " ");
+    });
+    for (let i = 0; i < headerLabels.length; i++) {
+      newHeader.push({ label: headerLabels[i], value: headerValues[i] });
+    }
+
+    return [...new Set(newHeader)];
   }
-];
-
-const Tables = ({ users }) => {
-  const [headers] = useState(intialHeader);
+}
+const Tables = ({ users, sortTable }) => {
+  const [headers, setHeaders] = useState();
+  useEffect(() => {
+    if (!(newHeader.length > 1)) {
+      setHeaders(generateHeader(users));
+    }
+  });
   return (
     <table>
       <thead>
         <tr>
           {headers &&
-            headers.map(title => <th key={title.value}>{title.label}</th>)}
+            headers.map(title => (
+              <th key={title.value} onClick={() => sortTable(title.value)}>
+                {title.label}
+              </th>
+            ))}
         </tr>
       </thead>
       <tbody>
         {users.length > 0 &&
           users.map(user => (
             <tr key={user.id}>
+              <td>{user.id}</td>
               <td>{user.first_name}</td>
               <td>{user.last_name}</td>
               <td>{user.company_name}</td>
@@ -57,7 +55,7 @@ const Tables = ({ users }) => {
               <td>{user.zip}</td>
               <td>{user.email}</td>
               <td>{user.web}</td>
-              <td>{user.weageb}</td>
+              <td>{user.age}</td>
             </tr>
           ))}
       </tbody>

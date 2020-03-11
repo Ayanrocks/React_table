@@ -13,17 +13,23 @@ h1 {
   font-size: 4rem;
 }
 
+.table__container {
+  padding: 2rem;
+}
+
 table {
   display: table;
   border-collapse: collapse;
   border-spacing: 2px;
-  border-color: gray;
-  width: 90%;
+  border-color: rgb(0, 0, 0);
   margin: 2rem auto;
   text-align: center;
-  font-size: 1.9rem;
+  font-size: 1.5rem;
+  width: 100%;
+  height: 50vh;
   background-color: #fff;
   box-shadow: 0 0 7px #ccc;
+  overflow-x: scroll;
 }
 
 thead {
@@ -35,12 +41,13 @@ thead {
 
 th,
 td {
-  width: 100%;
+  /* width: 100%; */
   text-align: center;
-  padding: 2rem;
+  padding: 1rem;
 }
 
 th {
+  cursor: pointer;
   font-size: 1.9rem !important;
   padding: 3rem;
   background-color: rgb(246, 246, 246);
@@ -49,4 +56,45 @@ th {
 td {
   border-top: 1px solid #222000;
   /* border-bottom: 1px solid #222000; */
+}
+
+.pagination {
+  width: 80%;
+  margin: 0 auto;
+  flex-wrap: wrap;
+  display: flex;
+}
+
+.page {
+  cursor: pointer;
+  width: 4rem;
+  height: 4rem;
+  background-color: rgb(255, 255, 255);
+  color: #000;
+  box-shadow: 0 0 10px rgb(226, 226, 226);
+  margin: 1rem;
+  border-radius: 100%;
+  text-align: center;
+  padding: 1rem;
+  font-size: 1.5rem;
+  position: relative;
+}
+
+.current-page {
+  color: #fff;
+  background-color: rgb(58, 177, 224);
+}
+
+.page p {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.searchBar {
+  width: 30rem;
+  font-size: 2rem;
+  padding: 1rem;
+  margin: 5rem;
 }
