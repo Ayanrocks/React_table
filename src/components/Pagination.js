@@ -43,7 +43,7 @@ export default class Pagination extends PureComponent {
         >
           Previous
         </button>
-        {displayPage.map(page => (
+        {pages.map(page => (
           <div
             className={currentPage === page ? "page current-page " : "page"}
             key={page}

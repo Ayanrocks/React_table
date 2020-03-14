@@ -44,9 +44,12 @@ const Tables = ({ users, sortTable }) => {
       </thead>
       <tbody>
         {users.length > 0 &&
-          users.map(user => (
-            <tr key={user.id}>
-              <td>{user.id}</td>
+          users.map((user, i) => (
+            <tr key={i}>
+              {headers && headers.length > 0 && headers.map((h,idx) => (
+                <td key={idx}>{user[h.value]}</td>
+              ))}
+              {/* <td>{user.id}</td>
               <td>{user.first_name}</td>
               <td>{user.last_name}</td>
               <td>{user.company_name}</td>
@@ -55,7 +58,7 @@ const Tables = ({ users, sortTable }) => {
               <td>{user.zip}</td>
               <td>{user.email}</td>
               <td>{user.web}</td>
-              <td>{user.age}</td>
+              <td>{user.age}</td> */}
             </tr>
           ))}
       </tbody>

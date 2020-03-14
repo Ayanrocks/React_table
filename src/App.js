@@ -7,7 +7,8 @@ export default class App extends Component {
   constructor() {
     super();
     this.state = {
-      url: "https://datapeace-storage.s3-us-west-2.amazonaws.com/dummy_data/users.json",
+      url: "http://datapeace-storage.s3-us-west-2.amazonaws.com/dummy_data/users.json",
+      // url: "https://jsonplaceholder.typicode.com/comments",
       users: [],
       pageNumber: 1,
       splitSize: 5,
@@ -16,8 +17,8 @@ export default class App extends Component {
     };
   }
   increase = () => {
-    const { pageNumber, users, splitSize } = this.state;
-    if (pageNumber === users.length / splitSize) {
+    const { pageNumber, filteredArray, splitSize } = this.state;
+    if (pageNumber === filteredArray.length / splitSize) {
       return null;
     }
     this.setState(prevState => ({ pageNumber: prevState.pageNumber + 1 }));
@@ -50,17 +51,17 @@ export default class App extends Component {
   }
 
   getTotalPages = () => {
-    const { users, splitSize } = this.state;
-    const totalPages = users.length / splitSize;
+    const { users, splitSize, filteredArray } = this.state;
+    const totalPages = parseInt(filteredArray.length / splitSize);
     const pages = [...Array(totalPages).keys()].map(i => i + 1);
     this.setState({ pages });
   };
 
   search = e => {
     const { users } = this.state;
-    const text = e.target.value;
-    const filteredArray = users.filter(user => JSON.stringify(user).includes(text));
-    this.setState({ filteredArray });
+    const text = e.target.value.toLowerCase();
+    const filteredArray = users.filter(user => JSON.stringify(user).toLowerCase().includes(text));
+    this.setState({ filteredArray }, this.getTotalPages);
   };
 
   render() {
